@@ -1,0 +1,142 @@
+[
+    {
+        "id": "john_smith_1992-06-14",
+        "last_name": "Smith",
+        "first_name": "John",
+        "birth_date": "1992-06-14",
+        "score": 0
+    },
+    {
+        "id": "emma_johnson_1989-03-22",
+        "last_name": "Johnson",
+        "first_name": "Emma",
+        "birth_date": "1989-03-22",
+        "score": 0
+    },
+    {
+        "id": "liam_brown_1995-10-01",
+        "last_name": "Brown",
+        "first_name": "Liam",
+        "birth_date": "1995-10-01",
+        "score": 0
+    },
+    {
+        "id": "olivia_jones_1990-01-15",
+        "last_name": "Jones",
+        "first_name": "Olivia",
+        "birth_date": "1990-01-15",
+        "score": 0
+    },
+    {
+        "id": "noah_miller_1993-12-03",
+        "last_name": "Miller",
+        "first_name": "Noah",
+        "birth_date": "1993-12-03",
+        "score": 0
+    },
+    {
+        "id": "ava_davis_1994-07-21",
+        "last_name": "Davis",
+        "first_name": "Ava",
+        "birth_date": "1994-07-21",
+        "score": 0
+    },
+    {
+        "id": "william_wilson_1988-09-18",
+        "last_name": "Wilson",
+        "first_name": "William",
+        "birth_date": "1988-09-18",
+        "score": 0
+    },
+    {
+        "id": "sophia_moore_1991-04-30",
+        "last_name": "Moore",
+        "first_name": "Sophia",
+        "birth_date": "1991-04-30",
+        "score": 0
+    },
+    {
+        "id": "james_taylor_1996-02-05",
+        "last_name": "Taylor",
+        "first_name": "James",
+        "birth_date": "1996-02-05",
+        "score": 0
+    },
+    {
+        "id": "mia_anderson_1993-11-09",
+        "last_name": "Anderson",
+        "first_name": "Mia",
+        "birth_date": "1993-11-09",
+        "score": 0
+    },
+    {
+        "id": "benjamin_thomas_1992-08-27",
+        "last_name": "Thomas",
+        "first_name": "Benjamin",
+        "birth_date": "1992-08-27",
+        "score": 0
+    },
+    {
+        "id": "isabella_jackson_1990-05-14",
+        "last_name": "Jackson",
+        "first_name": "Isabella",
+        "birth_date": "1990-05-14",
+        "score": 0
+    },
+    {
+        "id": "lucas_white_1994-12-20",
+        "last_name": "White",
+        "first_name": "Lucas",
+        "birth_date": "1994-12-20",
+        "score": 0
+    },
+    {
+        "id": "charlotte_harris_1991-06-06",
+        "last_name": "Harris",
+        "first_name": "Charlotte",
+        "birth_date": "1991-06-06",
+        "score": 0
+    },
+    {
+        "id": "henry_martin_1989-03-19",
+        "last_name": "Martin",
+        "first_name": "Henry",
+        "birth_date": "1989-03-19",
+        "score": 0
+    },
+    {
+        "id": "amelia_thompson_1995-07-29",
+        "last_name": "Thompson",
+        "first_name": "Amelia",
+        "birth_date": "1995-07-29",
+        "score": 0
+    },
+    {
+        "id": "alexander_garcia_1993-10-10",
+        "last_name": "Garcia",
+        "first_name": "Alexander",
+        "birth_date": "1993-10-10",
+        "score": 0
+    },
+    {
+        "id": "harper_martinez_1990-02-12",
+        "last_name": "Martinez",
+        "first_name": "Harper",
+        "birth_date": "1990-02-12",
+        "score": 0
+    },
+    {
+        "id": "sebastian_robinson_1988-11-30",
+        "last_name": "Robinson",
+        "first_name": "Sebastian",
+        "birth_date": "1988-11-30",
+        "score": 0
+    },
+    {
+        "id": "evelyn_clark_1992-04-07",
+        "last_name": "Clark",
+        "first_name": "Evelyn",
+        "birth_date": "1992-04-07",
+        "score": 0
+    }
+]
