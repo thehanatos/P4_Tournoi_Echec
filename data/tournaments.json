@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Tournoi Budokai",
+        "location": "Ile Papaya",
+        "start_date": "2025-09-15",
+        "end_date": "2025-10-15",
+        "description": "tournoi d'echec",
+        "number_of_rounds": 4,
+        "current_round": 0,
+        "rounds": [],
+        "players": []
+    }
+]
