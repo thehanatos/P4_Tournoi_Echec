@@ -1,5 +1,5 @@
 from views.player_view import create_player_view, list_players_view
-from views.tournament_view import create_tournament_view, list_tournaments_view
+from views.tournament_view import create_tournament_view, list_tournaments_view, register_players_to_tournament_view
 
 
 def main_menu():
@@ -9,7 +9,8 @@ def main_menu():
         print("2. Afficher les joueurs")
         print("3. Créer un tournoi")
         print("4. Afficher les tournois")
-        print("5. Quitter")
+        print("5. Inscrire des joueurs dans un tournoi")
+        print("6. Quitter")
 
         choice = input("Votre choix : ").strip()
 
@@ -22,6 +23,8 @@ def main_menu():
         elif choice == "4":
             list_tournaments_view()
         elif choice == "5":
+            register_players_to_tournament_view()
+        elif choice == "6":
             print("Au revoir !")
             break
         else:
