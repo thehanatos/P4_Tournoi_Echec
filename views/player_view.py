@@ -1,4 +1,5 @@
 from models.player import Player, PlayerRepository
+from controllers.player_controller import PlayerController
 
 
 def create_player_view():
@@ -13,8 +14,8 @@ def create_player_view():
         birth_date=birth_date
     )
 
-    PlayerRepository.add_player(player)
-    print(f"\n✅ Player {first_name} {last_name} enregistré avec succès.\n")
+    player = PlayerController.create_player(first_name, last_name, birth_date)
+    print(f"\n✅ Player {player.first_name} {player.last_name} enregistré avec succès.\n")
 
 
 def list_players_view():

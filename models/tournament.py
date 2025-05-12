@@ -1,17 +1,19 @@
 import json
 import os
-from datetime import datetime
+import uuid
 
 TOURNAMENTS_FILE = "data/tournaments.json"
 
 
 class Tournament:
-    def __init__(self, name, location, start_date, end_date, description, number_of_rounds=4, is_closed=False):
+    def __init__(
+            self, name, location, start_date, end_date, description, id=None, number_of_rounds=4, is_closed=False):
         self.name = name
         self.location = location
         self.start_date = start_date  # format: YYYY-MM-DD
         self.end_date = end_date      # format: YYYY-MM-DD
         self.description = description
+        self.id = id or str(uuid.uuid4())
         self.number_of_rounds = number_of_rounds
         self.current_round = 0
         self.rounds = []        # List of rounds
@@ -25,6 +27,7 @@ class Tournament:
             "start_date": self.start_date,
             "end_date": self.end_date,
             "description": self.description,
+            "id": self.id,
             "number_of_rounds": self.number_of_rounds,
             "current_round": self.current_round,
             "rounds": self.rounds,
@@ -35,6 +38,7 @@ class Tournament:
     @staticmethod
     def from_dict(data):
         tournament = Tournament(
+            id=data.get("id"),
             name=data["name"],
             location=data["location"],
             start_date=data["start_date"],

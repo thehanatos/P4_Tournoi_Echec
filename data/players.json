@@ -46,56 +46,56 @@
         "last_name": "Wilson",
         "first_name": "William",
         "birth_date": "1988-09-18",
-        "score": 0
+        "score": 1.0
     },
     {
         "id": "sophia_moore_1991-04-30",
         "last_name": "Moore",
         "first_name": "Sophia",
         "birth_date": "1991-04-30",
-        "score": 0
+        "score": 4.0
     },
     {
         "id": "james_taylor_1996-02-05",
         "last_name": "Taylor",
         "first_name": "James",
         "birth_date": "1996-02-05",
-        "score": 0
+        "score": 0.0
     },
     {
         "id": "mia_anderson_1993-11-09",
         "last_name": "Anderson",
         "first_name": "Mia",
         "birth_date": "1993-11-09",
-        "score": 0
+        "score": 3.0
     },
     {
         "id": "benjamin_thomas_1992-08-27",
         "last_name": "Thomas",
         "first_name": "Benjamin",
         "birth_date": "1992-08-27",
-        "score": 0
+        "score": 2.0
     },
     {
         "id": "isabella_jackson_1990-05-14",
         "last_name": "Jackson",
         "first_name": "Isabella",
         "birth_date": "1990-05-14",
-        "score": 0
+        "score": 2.0
     },
     {
         "id": "lucas_white_1994-12-20",
         "last_name": "White",
         "first_name": "Lucas",
         "birth_date": "1994-12-20",
-        "score": 0
+        "score": 1.0
     },
     {
         "id": "charlotte_harris_1991-06-06",
         "last_name": "Harris",
         "first_name": "Charlotte",
         "birth_date": "1991-06-06",
-        "score": 0
+        "score": 3.0
     },
     {
         "id": "henry_martin_1989-03-19",
