@@ -46,6 +46,10 @@ project/
    mkdir -p data models controllers views
    ```
 3. Placez les fichiers correspondants dans les bons dossiers (voir structure ci-dessus).
+4. Générez un rapport de flake8 :
+   ```bash
+   flake8 --format=html --htmldir=flake-report
+   ```
 
 ## ▶️ Lancement
 
