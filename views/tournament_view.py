@@ -280,3 +280,43 @@ def enter_results_for_round_view():
     TournamentRepository.save_tournaments(tournaments)
 
     print(f"\n✅ Résultats enregistrés pour {current_round['name']}.\n")
+
+
+def show_rounds_history_view():
+    tournaments = TournamentRepository.load_tournaments()
+    if not tournaments:
+        print("\nAucun tournoi disponible.\n")
+        return
+
+    print("\n=== Sélection du tournoi ===")
+    for idx, t in enumerate(tournaments, start=1):
+        print(f"{idx}. {t.name} ({t.location})")
+
+    try:
+        choice = int(input("Choisissez le tournoi (numéro) : ")) - 1
+        tournament = tournaments[choice]
+    except (ValueError, IndexError):
+        print("❌ Sélection invalide.")
+        return
+
+    if not tournament.rounds:
+        print(f"\nAucun round enregistré pour « {tournament.name} ».\n")
+        return
+
+    all_players = PlayerRepository.load_players()
+    player_dict = {p.id: f"{p.first_name} {p.last_name}" for p in all_players}
+
+    print(f"\n=== Historique des rounds pour « {tournament.name} » ===")
+
+    for rnd in tournament.rounds:
+        print(f"\n➡️  {rnd['name']}")
+        print(f"   Début : {rnd['start_time']}")
+        print(f"   Fin   : {rnd['end_time'] or '⏳ En cours'}")
+        print("   Matchs :")
+        for idx, match in enumerate(rnd["matches"], start=1):
+            p1_id, s1 = match[0]
+            p2_id, s2 = match[1]
+            p1_name = player_dict.get(p1_id, "??")
+            p2_name = player_dict.get(p2_id, "Libre") if p2_id else "Libre"
+            print(f"     {idx}. {p1_name} ({s1}) vs {p2_name} ({s2})")
+    print()
