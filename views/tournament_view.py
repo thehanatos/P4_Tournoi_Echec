@@ -356,3 +356,57 @@ def show_player_rankings_view():
     for rank, (player, score) in enumerate(ranking, start=1):
         print(f"{rank}. {player.first_name} {player.last_name} – {score} points")
     print()
+
+
+def close_tournament_view():
+    tournaments = TournamentRepository.load_tournaments()
+    if not tournaments:
+        print("\nAucun tournoi disponible.\n")
+        return
+
+    print("\n=== Clôturer un tournoi ===")
+    for idx, t in enumerate(tournaments, start=1):
+        status = "✅" if getattr(t, "is_closed", False) else "🕗"
+        print(f"{idx}. {t.name} ({t.location}) {status}")
+
+    try:
+        choice = int(input("Choisissez le tournoi (numéro) : ")) - 1
+        tournament = tournaments[choice]
+    except (ValueError, IndexError):
+        print("❌ Sélection invalide.")
+        return
+
+    if tournament.is_closed:
+        print("\n❌ Ce tournoi est déjà clôturé.\n")
+        return
+
+    incomplete = [r for r in tournament.rounds if r["end_time"] is None]
+    if incomplete:
+        print("\n❌ Tous les rounds ne sont pas terminés. Impossible de clôturer.\n")
+        return
+
+    all_players = PlayerRepository.load_players()
+    player_dict = {p.id: p for p in all_players}
+    ranking = sorted(
+        [(player_dict[pid], player_dict[pid].score) for pid in tournament.players],
+        key=lambda x: -x[1]
+    )
+
+    print(f"\n=== Résumé final : {tournament.name} ===")
+    print("📍 Lieu :", tournament.location)
+    print("📅 Du", tournament.start_date, "au", tournament.end_date)
+    print("\n🎖️ Classement final :")
+    for rank, (player, score) in enumerate(ranking, start=1):
+        print(f"{rank}. {player.first_name} {player.last_name} – {score} pts")
+
+    print("\n📘 Rounds :")
+    for rnd in tournament.rounds:
+        print(f"- {rnd['name']} ({rnd['start_time']} → {rnd['end_time']})")
+
+    confirm = input("\nConfirmer la clôture du tournoi ? (o/n) : ").strip().lower()
+    if confirm == "o":
+        tournament.is_closed = True
+        TournamentRepository.save_tournaments(tournaments)
+        print("\n✅ Tournoi clôturé avec succès.\n")
+    else:
+        print("\n❌ Clôture annulée.\n")
