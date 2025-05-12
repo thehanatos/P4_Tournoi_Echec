@@ -320,3 +320,39 @@ def show_rounds_history_view():
             p2_name = player_dict.get(p2_id, "Libre") if p2_id else "Libre"
             print(f"     {idx}. {p1_name} ({s1}) vs {p2_name} ({s2})")
     print()
+
+
+def show_player_rankings_view():
+    tournaments = TournamentRepository.load_tournaments()
+    if not tournaments:
+        print("\nAucun tournoi disponible.\n")
+        return
+
+    print("\n=== Sélection du tournoi ===")
+    for idx, t in enumerate(tournaments, start=1):
+        print(f"{idx}. {t.name} ({t.location})")
+
+    try:
+        choice = int(input("Choisissez le tournoi (numéro) : ")) - 1
+        tournament = tournaments[choice]
+    except (ValueError, IndexError):
+        print("❌ Sélection invalide.")
+        return
+
+    if not tournament.players:
+        print("\nAucun joueur inscrit à ce tournoi.\n")
+        return
+
+    all_players = PlayerRepository.load_players()
+    player_dict = {p.id: p for p in all_players}
+
+    # Crée une liste [(joueur, score)] triée par score décroissant
+    ranking = sorted(
+        [(player_dict[pid], player_dict[pid].score) for pid in tournament.players],
+        key=lambda x: -x[1]
+    )
+
+    print(f"\n=== Classement des joueurs – {tournament.name} ===")
+    for rank, (player, score) in enumerate(ranking, start=1):
+        print(f"{rank}. {player.first_name} {player.last_name} – {score} points")
+    print()
