@@ -1,6 +1,5 @@
 import json
 import os
-from datetime import datetime
 
 DATA_FILE = "/home/watashi/Projets/P5_Tournoi_Echec/data/players.json"
 
