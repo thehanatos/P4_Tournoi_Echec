@@ -7,7 +7,8 @@ from views.tournament_view import (
     start_new_round_view,
     enter_results_for_round_view,
     show_rounds_history_view,
-    show_player_rankings_view
+    show_player_rankings_view,
+    close_tournament_view
 )
 
 
@@ -24,7 +25,8 @@ def main_menu():
         print("8. Entrer les résultats d’un round")
         print("9. Historique des rounds")
         print("10. Classement des joueurs")
-        print("11. Quitter")
+        print("11. Clôturer un tournoi")
+        print("12. Quitter")
 
         choice = input("Votre choix : ").strip()
 
@@ -49,6 +51,8 @@ def main_menu():
         elif choice == "10":
             show_player_rankings_view()
         elif choice == "11":
+            close_tournament_view()
+        elif choice == "12":
             print("Au revoir !")
             break
         else:

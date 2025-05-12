@@ -6,8 +6,165 @@
         "end_date": "2025-10-15",
         "description": "tournoi d'echec",
         "number_of_rounds": 4,
-        "current_round": 0,
-        "rounds": [],
-        "players": []
+        "current_round": 4,
+        "rounds": [
+            {
+                "name": "Round 1",
+                "start_time": "2025-05-12 11:28:41",
+                "end_time": "2025-05-12 11:32:48",
+                "matches": [
+                    [
+                        [
+                            "noah_miller_1993-12-03",
+                            1.0
+                        ],
+                        [
+                            "liam_brown_1995-10-01",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "olivia_jones_1990-01-15",
+                            1.0
+                        ],
+                        [
+                            "john_smith_1992-06-14",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "ava_davis_1994-07-21",
+                            0.0
+                        ],
+                        [
+                            "emma_johnson_1989-03-22",
+                            1.0
+                        ]
+                    ]
+                ]
+            },
+            {
+                "name": "Round 2",
+                "start_time": "2025-05-12 11:36:19",
+                "end_time": "2025-05-12 11:36:51",
+                "matches": [
+                    [
+                        [
+                            "olivia_jones_1990-01-15",
+                            1.0
+                        ],
+                        [
+                            "noah_miller_1993-12-03",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "emma_johnson_1989-03-22",
+                            1.0
+                        ],
+                        [
+                            "liam_brown_1995-10-01",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "ava_davis_1994-07-21",
+                            1.0
+                        ],
+                        [
+                            "john_smith_1992-06-14",
+                            0.0
+                        ]
+                    ]
+                ]
+            },
+            {
+                "name": "Round 3",
+                "start_time": "2025-05-12 12:08:37",
+                "end_time": "2025-05-12 12:08:56",
+                "matches": [
+                    [
+                        [
+                            "emma_johnson_1989-03-22",
+                            0.0
+                        ],
+                        [
+                            "olivia_jones_1990-01-15",
+                            1.0
+                        ]
+                    ],
+                    [
+                        [
+                            "ava_davis_1994-07-21",
+                            1.0
+                        ],
+                        [
+                            "noah_miller_1993-12-03",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "liam_brown_1995-10-01",
+                            1.0
+                        ],
+                        [
+                            "john_smith_1992-06-14",
+                            0.0
+                        ]
+                    ]
+                ]
+            },
+            {
+                "name": "Round 4",
+                "start_time": "2025-05-12 12:09:04",
+                "end_time": "2025-05-12 12:09:13",
+                "matches": [
+                    [
+                        [
+                            "olivia_jones_1990-01-15",
+                            1.0
+                        ],
+                        [
+                            "ava_davis_1994-07-21",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "emma_johnson_1989-03-22",
+                            1.0
+                        ],
+                        [
+                            "noah_miller_1993-12-03",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "liam_brown_1995-10-01",
+                            1.0
+                        ],
+                        [
+                            null,
+                            0.0
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "players": [
+            "john_smith_1992-06-14",
+            "emma_johnson_1989-03-22",
+            "liam_brown_1995-10-01",
+            "olivia_jones_1990-01-15",
+            "noah_miller_1993-12-03",
+            "ava_davis_1994-07-21"
+        ],
+        "is_closed": true
     }
 ]

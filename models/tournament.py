@@ -6,7 +6,7 @@ TOURNAMENTS_FILE = "data/tournaments.json"
 
 
 class Tournament:
-    def __init__(self, name, location, start_date, end_date, description, number_of_rounds=4):
+    def __init__(self, name, location, start_date, end_date, description, number_of_rounds=4, is_closed=False):
         self.name = name
         self.location = location
         self.start_date = start_date  # format: YYYY-MM-DD
@@ -16,6 +16,7 @@ class Tournament:
         self.current_round = 0
         self.rounds = []        # List of rounds
         self.players = []       # List of player IDs
+        self.is_closed = is_closed
 
     def to_dict(self):
         return {
@@ -27,7 +28,8 @@ class Tournament:
             "number_of_rounds": self.number_of_rounds,
             "current_round": self.current_round,
             "rounds": self.rounds,
-            "players": self.players
+            "players": self.players,
+            "is_closed": self.is_closed
         }
 
     @staticmethod
@@ -38,7 +40,8 @@ class Tournament:
             start_date=data["start_date"],
             end_date=data["end_date"],
             description=data["description"],
-            number_of_rounds=data.get("number_of_rounds", 4)
+            number_of_rounds=data.get("number_of_rounds", 4),
+            is_closed=data.get("is_closed", False)
         )
         tournament.current_round = data.get("current_round", 0)
         tournament.rounds = data.get("rounds", [])
