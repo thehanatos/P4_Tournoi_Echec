@@ -12,19 +12,16 @@ Cette application permet de gérer des tournois d'échecs hors-ligne en utilisan
 project/
 │
 ├── controllers/
-│   └── main_controller.py
+│   └── player_controller.py
+│   └── tournament_controller.py
 │
 ├── models/
 │   ├── player.py
 │   ├── tournament.py
-│   ├── round.py
-│   └── match.py
 │
 ├── views/
-│   └── main_menu.py
-│
-├── utils/
-│   └── storage.py
+│   └── player_view.py
+│   └── tournament_view.py
 │
 ├── data/
 │   ├── players.json
@@ -46,7 +43,7 @@ project/
 1. Clonez le projet
 2. Créez les dossiers manquants s'ils ne sont pas présents :
    ```bash
-   mkdir -p data models controllers views utils
+   mkdir -p data models controllers views
    ```
 3. Placez les fichiers correspondants dans les bons dossiers (voir structure ci-dessus).
 
