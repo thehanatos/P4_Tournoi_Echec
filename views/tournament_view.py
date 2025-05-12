@@ -1,5 +1,7 @@
 from models.tournament import Tournament, TournamentRepository
 from models.player import PlayerRepository
+import random
+from datetime import datetime
 
 
 def create_tournament_view():
@@ -110,3 +112,171 @@ def show_players_in_tournament_view():
     for idx, p in enumerate(registered_players, start=1):
         print(f"{idx}. {p.first_name} {p.last_name} ({p.birth_date}) - Score: {p.score}")
     print()
+
+
+def start_new_round_view():
+    tournaments = TournamentRepository.load_tournaments()
+    if not tournaments:
+        print("\nAucun tournoi disponible.\n")
+        return
+
+    print("\n=== Sélection du tournoi ===")
+    for idx, t in enumerate(tournaments, start=1):
+        print(f"{idx}. {t.name} ({t.location})")
+
+    try:
+        choice = int(input("Choisissez le tournoi (numéro) : ")) - 1
+        tournament = tournaments[choice]
+    except (ValueError, IndexError):
+        print("❌ Sélection invalide.")
+        return
+
+    if tournament.current_round >= tournament.number_of_rounds:
+        print("⚠️ Tous les rounds ont déjà été joués.")
+        return
+
+    if len(tournament.players) < 2:
+        print("❌ Pas assez de joueurs inscrits pour générer un round.")
+        return
+
+    all_players = PlayerRepository.load_players()
+    player_dict = {p.id: p for p in all_players}
+
+    # Score par joueur
+    scores = {pid: player_dict[pid].score for pid in tournament.players}
+
+    # Tri des joueurs par score descendant
+    sorted_players = sorted(tournament.players, key=lambda pid: (-scores[pid], random.random()))
+
+    # Récupération des paires déjà jouées
+    past_pairs = set()
+    for round_ in tournament.rounds:
+        for match in round_["matches"]:
+            pair = tuple(sorted([match[0][0], match[1][0]]))
+            past_pairs.add(pair)
+
+    matches = []
+    used = set()
+
+    i = 0
+    while i < len(sorted_players) - 1:
+        pid1 = sorted_players[i]
+        for j in range(i + 1, len(sorted_players)):
+            pid2 = sorted_players[j]
+            pair = tuple(sorted([pid1, pid2]))
+            if pair not in past_pairs and pid1 not in used and pid2 not in used:
+                matches.append([[pid1, 0.0], [pid2, 0.0]])
+                used.add(pid1)
+                used.add(pid2)
+                break
+        i += 1
+
+    # Si joueur impair : il reste un joueur seul
+    if len(used) < len(sorted_players):
+        solo = [pid for pid in sorted_players if pid not in used][0]
+        print(f"⚠️ Joueur seul ce round : {player_dict[solo].first_name} {player_dict[solo].last_name}")
+        matches.append([[solo, 1.0], [None, 0.0]])  # Point gratuit
+
+    round_number = tournament.current_round + 1
+    round_name = f"Round {round_number}"
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    new_round = {
+        "name": round_name,
+        "start_time": now,
+        "end_time": None,
+        "matches": matches
+    }
+
+    tournament.rounds.append(new_round)
+    tournament.current_round = round_number
+
+    TournamentRepository.save_tournaments(tournaments)
+
+    print(f"\n✅ {round_name} démarré avec {len(matches)} match(s).\n")
+
+
+def enter_results_for_round_view():
+    tournaments = TournamentRepository.load_tournaments()
+    if not tournaments:
+        print("\nAucun tournoi disponible.\n")
+        return
+
+    print("\n=== Sélection du tournoi ===")
+    for idx, t in enumerate(tournaments, start=1):
+        print(f"{idx}. {t.name} ({t.location})")
+
+    try:
+        choice = int(input("Choisissez le tournoi (numéro) : ")) - 1
+        tournament = tournaments[choice]
+    except (ValueError, IndexError):
+        print("❌ Sélection invalide.")
+        return
+
+    if not tournament.rounds:
+        print("❌ Aucun round à gérer.")
+        return
+
+    # Dernier round non terminé
+    current_round = None
+    for r in tournament.rounds:
+        if r["end_time"] is None:
+            current_round = r
+            break
+
+    if not current_round:
+        print("✅ Tous les rounds sont terminés.")
+        return
+
+    print(f"\n=== Saisie des résultats - {current_round['name']} ===")
+
+    all_players = PlayerRepository.load_players()
+    player_dict = {p.id: p for p in all_players}
+
+    for idx, match in enumerate(current_round["matches"], start=1):
+        player1_id, _ = match[0]
+        player2_id, _ = match[1]
+
+        if player2_id is None:
+            print(f"Match {idx}: {player_dict[player1_id].first_name} {player_dict[player1_id].last_name}")
+            match[0][1] = 1.0
+            match[1][1] = 0.0
+            continue
+
+        p1 = player_dict[player1_id]
+        p2 = player_dict[player2_id]
+
+        print(f"\nMatch {idx}: {p1.first_name} {p1.last_name} VS {p2.first_name} {p2.last_name}")
+        print("1. Victoire joueur 1")
+        print("2. Victoire joueur 2")
+        print("3. Match nul")
+
+        while True:
+            res = input("Résultat (1/2/3) : ").strip()
+            if res == "1":
+                match[0][1] = 1.0
+                match[1][1] = 0.0
+                break
+            elif res == "2":
+                match[0][1] = 0.0
+                match[1][1] = 1.0
+                break
+            elif res == "3":
+                match[0][1] = 0.5
+                match[1][1] = 0.5
+                break
+            else:
+                print("Entrée invalide. Réessayez.")
+
+    # Mettre à jour les scores des joueurs
+    for match in current_round["matches"]:
+        for player_id, score in match:
+            if player_id is not None:
+                player_dict[player_id].score += score
+
+    # Sauvegarder joueurs et tournoi
+    PlayerRepository.save_players(list(player_dict.values()))
+    current_round["end_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    TournamentRepository.save_tournaments(tournaments)
+
+    print(f"\n✅ Résultats enregistrés pour {current_round['name']}.\n")
