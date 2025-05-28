@@ -1,7 +1,7 @@
 import json
 import os
 
-DATA_FILE = "/home/watashi/Projets/P5_Tournoi_Echec/data/players.json"
+DATA_FILE = "data/players.json"
 
 
 class Player:
