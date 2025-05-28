@@ -5,10 +5,16 @@ from datetime import datetime
 
 
 def validate_name(name):
+    """
+    Validates that a name contains only letters, hyphens, or spaces and is at least two characters long.
+    """
     return bool(re.fullmatch(r"[A-Za-zÀ-ÿ\- ]{2,}", name))
 
 
 def validate_birth_date(date_str):
+    """
+    Validates that the date is in the format YYYY-MM-DD and is not a future date.
+    """
     try:
         birth_date = datetime.strptime(date_str, "%Y-%m-%d").date()
         return birth_date <= datetime.today().date()
@@ -17,6 +23,9 @@ def validate_birth_date(date_str):
 
 
 def create_player_view():
+    """
+    Handles user input for creating a new player.
+    """
     print("=== Création d'un nouveau joueur ===")
 
     while True:
@@ -42,6 +51,11 @@ def create_player_view():
 
 
 def list_players_view():
+    """
+    Displays a sorted list of all registered players.
+    Players are sorted by last name and then first name.
+    Includes their birth date and current score.
+    """
     players = PlayerRepository.load_players()
 
     if not players:

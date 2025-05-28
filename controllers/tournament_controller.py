@@ -7,6 +7,9 @@ import random
 class TournamentController:
     @staticmethod
     def create_tournament(name, location, start_date, end_date, description):
+        """
+        Create a new tournament and save it to the repository.
+        """
         tournament = Tournament(
             name=name,
             location=location,
@@ -19,14 +22,23 @@ class TournamentController:
 
     @staticmethod
     def get_all_tournaments():
+        """
+        Load and return all tournaments from the repository.
+        """
         return TournamentRepository.load_tournaments()
 
     @staticmethod
     def get_all_players():
+        """
+        Load and return all registered players.
+        """
         return PlayerRepository.load_players()
 
     @staticmethod
     def register_players_to_tournament(tournament, player_ids):
+        """
+        Register multiple players to a given tournament.
+        """
         added = 0
         for pid in player_ids:
             if pid not in tournament.players:
@@ -44,11 +56,18 @@ class TournamentController:
 
     @staticmethod
     def get_players_in_tournament(tournament):
+        """
+        Retrieve player objects registered in a given tournament.
+        """
         all_players = TournamentController.get_all_players()
         return [p for p in all_players if p.id in tournament.players]
 
     @staticmethod
     def start_new_round(tournament):
+        """
+        Start a new round in the tournament, generate matches,
+        and update the tournament accordingly.
+        """
         if tournament.current_round >= tournament.number_of_rounds:
             return None, "Tous les rounds ont déjà été joués."
 
@@ -112,6 +131,9 @@ class TournamentController:
 
     @staticmethod
     def enter_results_for_round(tournament, match_results):
+        """
+        Record the results of the latest round's matches and update player scores.
+        """
         all_players = TournamentController.get_all_players()
         player_dict = {p.id: p for p in all_players}
 
@@ -133,6 +155,9 @@ class TournamentController:
 
     @staticmethod
     def get_tournament_rankings(tournament):
+        """
+        Get the current rankings of players in the tournament.
+        """
         all_players = TournamentController.get_all_players()
         player_dict = {p.id: p for p in all_players}
         return sorted(
@@ -142,6 +167,9 @@ class TournamentController:
 
     @staticmethod
     def close_tournament(tournament):
+        """
+        Close the tournament if all rounds are completed.
+        """
         if any(r["end_time"] is None for r in tournament.rounds):
             return False
         tournament.is_closed = True
@@ -150,6 +178,9 @@ class TournamentController:
 
     @staticmethod
     def get_current_round(tournament):
+        """
+        Get the current active round (if not yet completed).
+        """
         if not tournament.rounds:
             return None
 
@@ -160,6 +191,9 @@ class TournamentController:
 
     @staticmethod
     def set_match_result(match, score1, score2):
+        """
+        Set the result of a specific match and update the corresponding player scores.
+        """
         match[0][1] = score1
         match[1][1] = score2
 
@@ -175,6 +209,9 @@ class TournamentController:
 
     @staticmethod
     def finalize_round(tournament):
+        """
+        Finalize the current round by setting its end time and saving the tournament.
+        """
         if tournament.rounds:
             tournament.rounds[-1]["end_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             tournaments = TournamentController.get_all_tournaments()
@@ -186,6 +223,9 @@ class TournamentController:
 
     @staticmethod
     def has_incomplete_rounds(tournament):
+        """
+        Check whether the tournament still has any ongoing (incomplete) rounds.
+        """
         for round_ in tournament.rounds:
             if round_["end_time"] is None:
                 return True
@@ -193,6 +233,10 @@ class TournamentController:
 
     @staticmethod
     def display_final_summary(tournament):
+        """
+        Display a summary of the tournament including location, dates,
+        description, and final rankings.
+        """
         print(f"\n🏁 Résumé final du tournoi « {tournament.name} »")
         print(f"📍 Lieu : {tournament.location}")
         print(f"📅 Dates : {tournament.start_date} → {tournament.end_date}")

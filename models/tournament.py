@@ -6,8 +6,14 @@ TOURNAMENTS_FILE = "data/tournaments.json"
 
 
 class Tournament:
+    """
+    Represents a chess tournament with relevant attributes such as name, location, date, players, and rounds.
+    """
     def __init__(
             self, name, location, start_date, end_date, description, id=None, number_of_rounds=4, is_closed=False):
+        """
+        Initializes a new Tournament instance.
+        """
         self.name = name
         self.location = location
         self.start_date = start_date  # format: YYYY-MM-DD
@@ -21,6 +27,9 @@ class Tournament:
         self.is_closed = is_closed
 
     def to_dict(self):
+        """
+        Converts the Tournament object into a dictionary format for serialization.
+        """
         return {
             "name": self.name,
             "location": self.location,
@@ -37,6 +46,9 @@ class Tournament:
 
     @staticmethod
     def from_dict(data):
+        """
+        Creates a Tournament object from a dictionary.
+        """
         tournament = Tournament(
             id=data.get("id"),
             name=data["name"],
@@ -54,8 +66,14 @@ class Tournament:
 
 
 class TournamentRepository:
+    """
+    Handles loading, saving, and updating tournament data to and from the JSON file.
+    """
     @staticmethod
     def load_tournaments():
+        """
+        Loads all tournaments from the JSON file.
+        """
         if not os.path.exists(TOURNAMENTS_FILE):
             return []
         with open(TOURNAMENTS_FILE, "r") as f:
@@ -64,11 +82,17 @@ class TournamentRepository:
 
     @staticmethod
     def save_tournaments(tournaments):
+        """
+        Saves the given list of tournaments to the JSON file.
+        """
         with open(TOURNAMENTS_FILE, "w") as f:
             json.dump([t.to_dict() for t in tournaments], f, indent=4)
 
     @staticmethod
     def add_tournament(tournament):
+        """
+        Adds a new tournament to the list and saves it.
+        """
         tournaments = TournamentRepository.load_tournaments()
         tournaments.append(tournament)
         TournamentRepository.save_tournaments(tournaments)

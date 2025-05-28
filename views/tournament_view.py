@@ -5,10 +5,16 @@ from datetime import datetime
 
 
 def validate_text_field(text):
+    """
+    Validates a general text field (name, location, etc.).
+    """
     return bool(re.fullmatch(r"[A-Za-z0-9À-ÿ ,.'\-]{2,}", text))
 
 
 def validate_date(date_str):
+    """
+    Validates and parses a date string in the format YYYY-MM-DD.
+    """
     try:
         return datetime.strptime(date_str, "%Y-%m-%d").date()
     except ValueError:
@@ -16,6 +22,12 @@ def validate_date(date_str):
 
 
 def create_tournament_view():
+    """
+    Interactive CLI view for creating a new tournament.
+
+    Prompts the user for tournament details (name, location, start/end dates, description),
+    validates inputs, and passes the data to the TournamentController for creation.
+    """
     print("\n=== Création d’un nouveau tournoi ===")
 
     while True:
@@ -58,6 +70,10 @@ def create_tournament_view():
 
 
 def list_tournaments_view():
+    """
+    Displays a list of all saved tournaments with basic details like name, location,
+    dates, round progress, and number of registered players.
+    """
     tournaments = TournamentController.get_all_tournaments()
 
     if not tournaments:
@@ -72,6 +88,9 @@ def list_tournaments_view():
 
 
 def register_players_to_tournament_view():
+    """
+    Allows the user to select a tournament and register one or more players from the available list.
+    """
     tournaments = TournamentController.get_all_tournaments()
     if not tournaments:
         print("\nAucun tournoi disponible.\n")
@@ -113,6 +132,10 @@ def register_players_to_tournament_view():
 
 
 def show_players_in_tournament_view():
+    """
+    Displays all players currently registered in a selected tournament,
+    along with their name, birth date, and current score.
+    """
     tournament = _select_tournament()
     if not tournament:
         return
@@ -129,6 +152,9 @@ def show_players_in_tournament_view():
 
 
 def start_new_round_view():
+    """
+    Starts a new round in the selected tournament using the TournamentController.
+    """
     tournament = _select_tournament()
     if not tournament:
         return
@@ -143,6 +169,11 @@ def start_new_round_view():
 
 
 def enter_results_for_round_view():
+    """
+    Allows the user to input match results for the current round of a selected tournament.
+
+    Supports 3 outcomes: player 1 wins, player 2 wins, or draw.
+    """
     tournament = _select_tournament()
     if not tournament:
         return
@@ -192,6 +223,9 @@ def enter_results_for_round_view():
 
 
 def show_rounds_history_view():
+    """
+    Displays a detailed history of all completed rounds in a selected tournament.
+    """
     tournament = _select_tournament()
     if not tournament:
         return
@@ -219,6 +253,9 @@ def show_rounds_history_view():
 
 
 def show_player_rankings_view():
+    """
+    Displays the current player rankings for a selected tournament.
+    """
     tournament = _select_tournament()
     if not tournament:
         return
@@ -232,6 +269,9 @@ def show_player_rankings_view():
 
 
 def close_tournament_view():
+    """
+    Handles closing a tournament after verifying that all rounds are complete.
+    """
     tournament = _select_tournament()
     if not tournament:
         return
@@ -255,6 +295,9 @@ def close_tournament_view():
 
 
 def _select_tournament():
+    """
+    Displays a list of available tournaments and prompts the user to select one.
+    """
     tournaments = TournamentController.get_all_tournaments()
     if not tournaments:
         print("\nAucun tournoi disponible.\n")
