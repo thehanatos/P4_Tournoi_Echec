@@ -1,16 +1,59 @@
 from controllers.tournament_controller import TournamentController
 from models.player import PlayerRepository
+import re
+from datetime import datetime
+
+
+def validate_text_field(text):
+    return bool(re.fullmatch(r"[A-Za-z0-9À-ÿ ,.'\-]{2,}", text))
+
+
+def validate_date(date_str):
+    try:
+        return datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return None
 
 
 def create_tournament_view():
     print("\n=== Création d’un nouveau tournoi ===")
-    name = input("Nom du tournoi : ").strip()
-    location = input("Lieu : ").strip()
-    start_date = input("Date de début (YYYY-MM-DD) : ").strip()
-    end_date = input("Date de fin (YYYY-MM-DD) : ").strip()
-    description = input("Description : ").strip()
 
-    TournamentController.create_tournament(name, location, start_date, end_date, description)
+    while True:
+        name = input("Nom du tournoi : ").strip()
+        if validate_text_field(name):
+            break
+        print("❌ Nom invalide. Minimum 2 caractères, lettres/chiffres/espaces autorisés.")
+
+    while True:
+        location = input("Lieu : ").strip()
+        if validate_text_field(location):
+            break
+        print("❌ Lieu invalide. Minimum 2 caractères, lettres/chiffres/espaces autorisés.")
+
+    while True:
+        start_date_str = input("Date de début (YYYY-MM-DD) : ").strip()
+        start_date = validate_date(start_date_str)
+        if start_date and start_date >= datetime.today().date():
+            break
+        print("❌ Date de début invalide ou passée.")
+
+    while True:
+        end_date_str = input("Date de fin (YYYY-MM-DD) : ").strip()
+        end_date = validate_date(end_date_str)
+        if end_date and end_date >= start_date:
+            break
+        print("❌ Date de fin invalide ou antérieure à la date de début.")
+
+    description = input("Description (facultatif) : ").strip()
+
+    TournamentController.create_tournament(
+        name=name,
+        location=location,
+        start_date=start_date_str,
+        end_date=end_date_str,
+        description=description
+    )
+
     print(f"\n✅ Tournoi « {name} » enregistré avec succès.\n")
 
 

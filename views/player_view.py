@@ -1,18 +1,41 @@
-from models.player import Player, PlayerRepository
+from models.player import PlayerRepository
 from controllers.player_controller import PlayerController
+import re
+from datetime import datetime
+
+
+def validate_name(name):
+    return bool(re.fullmatch(r"[A-Za-zÀ-ÿ\- ]{2,}", name))
+
+
+def validate_birth_date(date_str):
+    try:
+        birth_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        return birth_date <= datetime.today().date()
+    except ValueError:
+        return False
 
 
 def create_player_view():
     print("=== Création d'un nouveau joueur ===")
-    first_name = input("Prénom : ").strip()
-    last_name = input("Nom de famille : ").strip()
-    birth_date = input("Date de naissance (YYYY-MM-DD) : ").strip()
 
-    player = Player(
-        first_name=first_name,
-        last_name=last_name,
-        birth_date=birth_date
-    )
+    while True:
+        first_name = input("Prénom : ").strip()
+        if validate_name(first_name):
+            break
+        print("❌ Le prénom est invalide. Utilisez uniquement des lettres (minimum 2).")
+
+    while True:
+        last_name = input("Nom de famille : ").strip()
+        if validate_name(last_name):
+            break
+        print("❌ Le nom est invalide. Utilisez uniquement des lettres (minimum 2).")
+
+    while True:
+        birth_date = input("Date de naissance (YYYY-MM-DD) : ").strip()
+        if validate_birth_date(birth_date):
+            break
+        print("❌ Format ou date invalide. Utilisez le format YYYY-MM-DD et une date passée.")
 
     player = PlayerController.create_player(first_name, last_name, birth_date)
     print(f"\n✅ Player {player.first_name} {player.last_name} enregistré avec succès.\n")
