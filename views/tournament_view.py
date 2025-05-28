@@ -153,7 +153,8 @@ def show_players_in_tournament_view():
 
 def start_new_round_view():
     """
-    Starts a new round in the selected tournament using the TournamentController.
+    Starts a new round in the selected tournament using the TournamentController
+    and displays the player pairings for the round.
     """
     tournament = _select_tournament()
     if not tournament:
@@ -164,6 +165,16 @@ def start_new_round_view():
         print(f"\n❌ {message}\n")
     elif result:
         print(f"\n✅ Nouveau round démarré : {result['name']}\n")
+
+        print("Paires des matchs :")
+        player_dict = {p.id: p for p in PlayerRepository.load_players()}
+        for idx, match in enumerate(result["matches"], start=1):
+            p1_id, _ = match[0]
+            p2_id, _ = match[1]
+            p1_name = f"{player_dict[p1_id].first_name} {player_dict[p1_id].last_name}" if p1_id else "Libre"
+            p2_name = f"{player_dict[p2_id].first_name} {player_dict[p2_id].last_name}" if p2_id else "Libre"
+            print(f"  Match {idx}: {p1_name} vs {p2_name}")
+        print()
     else:
         print("\n❌ Erreur inconnue lors du démarrage du round.\n")
 
